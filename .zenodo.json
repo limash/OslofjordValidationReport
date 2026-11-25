@@ -1,0 +1,16 @@
+{
+  "title": "Validation of FjordSim's Oslofjord simulation",
+  "upload_type": "publication",
+  "publication_type": "report",
+  "description": "<p>A validation report of FjordSim's 160 m simulation of the Oslofjord. It scores the run against NIVA and IMR CTD casts, Kartverket tide gauges and the Color Fantasy FerryBox, and compares it with the NorKyst v3 and NorFjords models. Each version scores one run. The newest report is at <a href=\"https://limash.github.io/OslofjordValidationReport/\">limash.github.io/OslofjordValidationReport</a>.</p>",
+  "creators": [
+    {"name": "Iakubov, Shamil", "affiliation": "Norwegian Institute for Water Research (NIVA)"}
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": ["Oslofjord", "FjordSim", "ocean model validation", "hydrography"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/limash/OslofjordValidation", "relation": "isSupplementedBy", "resource_type": "software"},
+    {"identifier": "https://github.com/NIVANorge/FjordSim.jl", "relation": "references", "resource_type": "software"}
+  ]
+}
