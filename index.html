@@ -1,7 +1,18 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Validation of FjordSim's Oslofjord simulation</title><style>
-:root { --fg: #1d2433; --muted: #5b6475; --line: #d9dee7; --soft: #f4f6f9; --accent: #1f5f99; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Validation of FjordSim's Oslofjord simulation</title><script>
+try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }
+catch (e) {}
+</script><style>
+:root { --bg: #fff; --fg: #1d2433; --muted: #5b6475; --line: #d9dee7; --soft: #f4f6f9; --accent: #1f5f99;
+        --on-accent: #fff; --button: #fff; --explorer: #eaf2fa; --explorer-line: #c5d9ec; --explorer-hover: #dde9f6;
+        color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #14181f; --fg: #e3e7ee; --muted: #9aa3b2; --line: #2f3744; --soft: #1d232c; --accent: #7fb3e6;
+       --on-accent: #10161d; --button: #1d232c; --explorer: #1a2633; --explorer-line: #2e4a66;
+       --explorer-hover: #213245; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #14181f; --fg: #e3e7ee; --muted: #9aa3b2; --line: #2f3744; --soft: #1d232c; --accent: #7fb3e6;
+       --on-accent: #10161d; --button: #1d232c; --explorer: #1a2633; --explorer-line: #2e4a66;
+       --explorer-hover: #213245; color-scheme: dark; }
 * { box-sizing: border-box; }
-body { margin: 0; background: #fff; color: var(--fg);
+body { margin: 0; background: var(--bg); color: var(--fg);
        font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; }
 main { max-width: 1060px; margin: 0 auto; padding: 32px 16px 96px; }
 h1 { font-size: 1.85rem; line-height: 1.2; margin: 0 0 .3rem; }
@@ -27,15 +38,17 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .wide { overflow-x: auto; }
 .switch { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0 .6rem; align-items: center; }
 .switch button { font: inherit; font-size: .9rem; padding: .25rem .8rem; border: 1px solid var(--line);
-                 border-radius: 999px; background: #fff; cursor: pointer; }
-.switch button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+                 border-radius: 999px; background: var(--button); color: var(--fg); cursor: pointer; }
+.switch button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.switch.theme { justify-content: flex-end; margin: 0 0 .8rem; }
+.switch.theme button { font-size: .8rem; padding: .15rem .65rem; }
 .switch select { font: inherit; font-size: .9rem; padding: .2rem .4rem; }
 ol.summary li { margin-bottom: .45rem; }
-a.explorer { display: block; margin: 1rem 0 1.6rem; padding: .9rem 1.2rem; border-radius: 8px; background: #eaf2fa;
-             border: 1px solid #c5d9ec; color: var(--fg); text-decoration: none; }
+a.explorer { display: block; margin: 1rem 0 1.6rem; padding: .9rem 1.2rem; border-radius: 8px;
+             background: var(--explorer); border: 1px solid var(--explorer-line); color: var(--fg); text-decoration: none; }
 a.explorer b { display: block; font-size: 1.15rem; color: var(--accent); }
-a.explorer:hover { background: #dde9f6; }
-</style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script></head><body><main><h1>Validation of FjordSim's Oslofjord simulation</h1><p class="meta">Shamil Iakubov · <a href="mailto:yakubov.sha@gmail.com">yakubov.sha@gmail.com</a><br>Cite as: Iakubov, S. (2026). <i>Validation of FjordSim's Oslofjord simulation</i>. Zenodo. <a href="https://doi.org/10.5281/zenodo.24532064">https://doi.org/10.5281/zenodo.24532064</a><br>Run oslofjorden_2026-11-20 (tags 20261117T010941 and 20261119T203432) · NIVA and IMR casts, Kartverket tide gauges, NorKyst v3 and NorFjords</p><nav class="toc"><ul class=plain><li><a href="#abstract">Abstract</a></li><li><a href="#surface">Modelled surface fields</a></li></ul><ol><li><a href="#simulation">The simulation</a></li><li><a href="#data">Validation data</a></li><li><a href="#results">Results</a></li><li><a href="#summary">Summary</a></li><li><a href="#availability">Code and data availability</a></li><li><a href="#references">References</a></li></ol></nav><h2 id="abstract">Abstract</h2>
+a.explorer:hover { background: var(--explorer-hover); }
+</style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script></head><body><main><div class="switch theme" aria-label="Colour theme"><button data-choice="auto">Auto</button><button data-choice="light">Light</button><button data-choice="dark">Dark</button></div><h1>Validation of FjordSim's Oslofjord simulation</h1><p class="meta">Shamil Iakubov · <a href="mailto:yakubov.sha@gmail.com">yakubov.sha@gmail.com</a><br>Cite as: Iakubov, S. (2026). <i>Validation of FjordSim's Oslofjord simulation</i>. Zenodo. <a href="https://doi.org/10.5281/zenodo.24532064">https://doi.org/10.5281/zenodo.24532064</a><br>Run oslofjorden_2026-11-20 (tags 20261117T010941 and 20261119T203432) · NIVA and IMR casts, Kartverket tide gauges, NorKyst v3 and NorFjords</p><nav class="toc"><ul class=plain><li><a href="#abstract">Abstract</a></li><li><a href="#surface">Modelled surface fields</a></li></ul><ol><li><a href="#simulation">The simulation</a></li><li><a href="#data">Validation data</a></li><li><a href="#results">Results</a></li><li><a href="#summary">Summary</a></li><li><a href="#availability">Code and data availability</a></li><li><a href="#references">References</a></li></ol></nav><h2 id="abstract">Abstract</h2>
 <p>FjordSim ran the Oslofjord on a 160 m grid from 2024-10-01 to 2026-10-01. We score it against 899 NIVA casts, 108 IMR casts and three tide gauges, beside NorKyst v3 160 m, NorKyst v3 800 m and NorFjords 160 m. FjordSim keeps the stratification best: it has the lowest salinity RMSE (2.02 against 2.23 g/kg for NorKyst v3 160 m on the same samples) and is the only model with the Drammensfjord's brackish surface layer. NorKyst v3 160 m has the lower temperature RMSE (1.34 against 1.42 °C), but its columns miss the deep water of most sill basins. NorFjords renews the deep basins and has the deep temperature closest to the casts, though it brings in too much salt water. FjordSim renews the deep basins less than the ROMS models NorKyst and NorFjords. Its better stratification and its poorer renewal may both come from the vertical grid. FjordSim's flat z-levels follow the stratification, but on their staircase seabed dense water entering over a sill mixes to the bottom; the terrain-following levels of ROMS carry it down along the seabed. FjordSim's upper layer is too salty throughout and its deep layer too cold in spring 2026, by as much as NorKyst v3 800 m, its boundary source, in the outer fjord: both errors most likely come in over the open boundary. The tide is right to 0.2 cm in M2.</p>
 <h2 id="surface">Modelled surface fields</h2>
 <figure id="fig-surface" data-videos='{&quot;Temperature&quot;: {&quot;November 2024&quot;: &quot;video/surface/snapshots_surface_20261117T010941_part2_temperature.mp4&quot;}, &quot;Salinity&quot;: {&quot;November 2024&quot;: &quot;video/surface/snapshots_surface_20261117T010941_part2_salinity.mp4&quot;}, &quot;Sea level&quot;: {&quot;November 2024&quot;: &quot;video/surface/snapshots_surface_20261117T010941_part2_elevation.mp4&quot;}, &quot;Currents&quot;: {&quot;November 2024&quot;: &quot;video/surface/snapshots_surface_20261117T010941_part2_currents.mp4&quot;}}'><div class="switch"><button data-variable="Temperature" class=on>Temperature</button><button data-variable="Salinity">Salinity</button><button data-variable="Sea level">Sea level</button><button data-variable="Currents">Currents</button></div><video controls preload="metadata" src="video/surface/snapshots_surface_20261117T010941_part2_temperature.mp4"></video><figcaption><b>Fig. 1.</b> Hourly surface temperature, salinity, sea level and currents, November 2024.</figcaption></figure>
@@ -142,5 +155,14 @@ document.querySelectorAll('[data-videos]').forEach(fig => {
     variable = b.dataset.variable; show();
   });
   fig.querySelector('select')?.addEventListener('change', e => { part = e.target.value; show(); });
+});
+const themes = document.querySelectorAll('.theme button');
+const mark = t => themes.forEach(b => b.classList.toggle('on', b.dataset.choice === t));
+mark(document.documentElement.dataset.theme ?? 'auto');
+themes.forEach(b => b.onclick = () => {
+  const t = b.dataset.choice;
+  if (t === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('theme', t); } catch (e) {}
+  mark(t);
 });
 </script></body></html>
