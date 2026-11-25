@@ -1,5 +1,7 @@
 # Validation of FjordSim's Oslofjord simulation
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24532064.svg)](https://doi.org/10.5281/zenodo.24532064)
+
 The newest validation report of [FjordSim](https://github.com/NIVANorge/FjordSim.jl)'s Oslofjord
 simulation: https://limash.github.io/OslofjordValidationReport/
 
